@@ -29,7 +29,9 @@ const useStyles = makeStyles({
 });
 
 const Editor = () => {
-  const [code, setCode] = useState('hello');
+  const [code, setCode] = useState(
+    `import Greeting from 'greetings.js';\n\nconsole.log("hello there",Greeting);`
+  );
   const classes = useStyles();
   return (
     <div className={classes.root}>
