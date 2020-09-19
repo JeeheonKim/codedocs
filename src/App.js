@@ -10,7 +10,7 @@ function App() {
   if (auth) {
     routes = (
       <Switch>
-        <Route path="/" component={Editor} />
+        <Route exact path="/" component={Editor} />
       </Switch>
     );
   } else {
