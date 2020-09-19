@@ -5,7 +5,7 @@ const Home = ({ userObj }) => {
   console.log(userObj)
   return (
     <div className="container">
-      Hello 
+      Recent Document 
     </div>
   );
 };

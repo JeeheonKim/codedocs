@@ -1,12 +1,12 @@
-import React from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
-import Auth from "../routes/Auth";
-import Home from "../routes/Home";
-import Navigation from "./Navigation";
+import React from 'react';
+import {HashRouter as Router, Route, Switch} from 'react-router-dom';
+import Auth from '../routes/Auth';
+import Home from '../routes/Home';
+import Navigation, {EditorNavigation} from './Navigation';
 import Editor from '../views/editor';
 
-const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
-  console.log(isLoggedIn)
+const AppRouter = ({refreshUser, isLoggedIn, userObj, currentLink}) => {
+  console.log(isLoggedIn);
   return (
     <Router>
       {isLoggedIn && <Navigation userObj={userObj}/>}
@@ -15,11 +15,11 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
           <div
             style={{
               maxWidth: 890,
-              width: "100%",
-              margin: "0 auto",
+              width: '100%',
+              margin: '0 auto',
               marginTop: 80,
-              display: "flex",
-              justifyContent: "center",
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
             <Route exact path="/">
@@ -36,7 +36,6 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
             </Route>
           </>
         )}
-
       </Switch>
     </Router>
   );

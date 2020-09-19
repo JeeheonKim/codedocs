@@ -34,8 +34,7 @@ form {
 }
 
 .container {
-  width: 100%;
-  max-width: 320px;
+  /* width: 100%; */
   display: flex;
   flex-direction: column;
 }
@@ -77,6 +76,13 @@ form {
   align-items: center;
 }
 
+.authFormContainer {
+  /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .authBtns {
   display: flex;
   flex-direction: column;
@@ -106,7 +112,7 @@ form {
   /* background-color: rgba(255, 255, 255, 1); */
   margin-bottom: 10px;
   font-size: 12px;
-  color: white!important;
+  color: white !important;
   box-sizing: content-box;
 }
 
@@ -136,13 +142,13 @@ form {
   text-decoration: underline;
 }
 
-.google-icon{
+.google-icon {
   margin-right: 11px;
   width: 18px;
   height: 18px;
 }
 
-.github-icon{
+.github-icon {
   margin-right: 9px;
   width: 22px;
   height: 22px;
@@ -150,4 +156,8 @@ form {
 
 .CodeMirror {
   min-height: 80vh !important;
+}
+
+nav > ul > li {
+  margin-right: .5em;
 }
