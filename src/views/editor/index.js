@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {
   MenuItem,
   InputLabel,
   FormHelperText,
   FormControl,
+  FormControlLabel,
   Select,
+  Switch,
 } from '@material-ui/core';
+
+import {purple} from '@material-ui/core/colors';
 import {Controlled as CodeMirror} from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
@@ -56,8 +60,21 @@ const useStyles = makeStyles({
     justifyContent: 'center',
   },
 });
-
+const PurpleSwitch = withStyles({
+  switchBase: {
+    color: purple[300],
+    '&$checked': {
+      color: purple[500],
+    },
+    '&$checked + $track': {
+      backgroundColor: purple[500],
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 const Editor = () => {
+  const [highlight, setHighlight] = useState(true);
   const [theme, setTheme] = useState('material');
   const [lang, setLang] = useState('Javascript');
   const [code, setCode] = useState(
@@ -69,13 +86,29 @@ const Editor = () => {
       <h2 className={classes.heading}>Welcome to editor</h2>
       <div className="toolbar">
         <FormControl className={classes.formControl}>
+          <FormControlLabel
+            control={
+              <PurpleSwitch
+                checked={highlight}
+                onChange={() => {
+                  setHighlight(!highlight);
+                }}
+                name="syntaxHighlight"
+              />
+            }
+            label="Syntax Highlighting"
+          />
+        </FormControl>
+        <FormControl className={classes.formControl}>
           <InputLabel className={classes.label}>Language</InputLabel>
           <Select
             className={classes.LangInput}
             id="demo-simple-select"
             value={lang}
             onChange={(newVal) => {
-              setLang(newVal.target.value);
+              if (highlight) {
+                setLang(newVal.target.value);
+              }
             }}
           >
             <MenuItem value={'Javascript'}>Javascript</MenuItem>
@@ -106,7 +139,7 @@ const Editor = () => {
           value={code}
           options={{
             lineNumbers: true,
-            mode: MODES.getMode(lang),
+            mode: highlight ? MODES.getMode(lang) : 'text/plain',
             theme: theme,
             scrollbarStyle: null,
             indentUnit: 2,
