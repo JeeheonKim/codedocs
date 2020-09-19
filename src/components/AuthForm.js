@@ -47,6 +47,7 @@ const AuthForm = () => {
           value={email}
           onChange={onChange}
           className="authInput"
+          autoComplete="on"
         />
         <Input
           name="password"
@@ -56,6 +57,7 @@ const AuthForm = () => {
           value={password}
           className="authInput"
           onChange={onChange}
+          autoComplete="on"
         />
         <Input
           type="submit"

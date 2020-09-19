@@ -17,20 +17,21 @@ const useStyles = makeStyles({
   },
   Editor: {
     display: 'inline-block',
-    width: '80%',
   },
   codeMirror: {
     display: 'flex',
-    height: '400px !important',
+    height: 'auto',
     flexDirection: 'column',
     padding: '20px',
     fontSize: '20px',
+    minWidth: "700px",
+    fontSize: "1em"
   },
 });
 
 const Editor = () => {
   const [code, setCode] = useState(
-    `import Greeting from 'greetings.js';\n\nconsole.log("hello there",Greeting);`
+    `import Greeting from 'greetings.js';\n\nconsole.log("hello there", Greeting);`
   );
   const classes = useStyles();
   return (
