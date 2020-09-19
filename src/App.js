@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import Editor from './views/editor';
 
 function App() {
+  let routes;
+
+  const [auth, setAuth] = useState(true);
+
+  if (auth) {
+    routes = (
+      <Switch>
+        <Route exact path="/" component={Editor} />
+      </Switch>
+    );
+  } else {
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">{routes}</div>
+    </BrowserRouter>
   );
 }
 
