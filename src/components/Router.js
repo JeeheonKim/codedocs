@@ -3,6 +3,7 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 import Navigation from "./Navigation";
+import Editor from '../views/editor';
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
   console.log(isLoggedIn)
@@ -23,6 +24,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
           >
             <Route exact path="/">
               <Home userObj={userObj} />
+              <Editor/>
             </Route>
           </div>
         ) : (

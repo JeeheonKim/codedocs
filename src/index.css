@@ -147,3 +147,7 @@ form {
   width: 22px;
   height: 22px;
 }
+
+.CodeMirror {
+  min-height: 80vh !important;
+}
