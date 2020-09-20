@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { authService } from "../firebaseConfig";
 import {Input, Button} from '@material-ui/core'
-const inputStyles = {};
 
 const AuthForm = () => {
   const [email, setEmail] = useState("");
