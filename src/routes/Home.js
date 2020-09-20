@@ -5,7 +5,7 @@ const Home = ({ userObj }) => {
   console.log(userObj)
   return (
     <div className="container">
-      Recent Document 
+      Recent Documents
     </div>
   );
 };
