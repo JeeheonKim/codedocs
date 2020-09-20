@@ -1,6 +1,6 @@
 # Codedoc: Practice coding interview with peers
 
-😍 Visit [codedoc.space](https://www.notion.so/codedoc.space) play around with it yourself! 
+😍 Visit [codedoc.space](https://codedoc.space) play around with it yourself! 
 
 ## Inspiration
 
