@@ -158,6 +158,52 @@ form {
   min-height: 80vh !important;
 }
 
+nav {
+  display: flex;
+  background-color: black;
+}
 nav > ul > li {
   margin-right: .5em;
+}
+
+.logo{
+  margin-right: 10 
+}
+
+textarea{
+  resize: none;
+  min-width: 200px;
+  height: 400px;
+  margin: 1em;
+  outline: none;
+  color: white;
+  font-family: 'Lato', sans-serif;
+  border: none;
+  background: transparent;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 2em;
+  background-color: whitesmoke;
+  color: black;
+  padding-left: .3em; padding-right: .3em;
+  border-radius: 3px;
+}
+
+.fullScreen {
+  position: fixed;
+  left: 0;
+  right:0;
+  margin-top: 0 !important;
+  background-color: #20232a;
+}
+
+#select-hours-label{
+  /* color: white!important; */
+}
+#select-hours,#select-minutes,#select-seconds{
+  /* color: white; */
+  /* background-color: white; */
 }
