@@ -41,13 +41,14 @@ const useStyles = makeStyles({
     fontSize: "1em"
   },
   formControlGroup: {
-    // minWidth: 120,
     border: '2px solid white',
     borderRadius: '10px',
     padding: '.4em',
   },  
+  formControl: {
+    minWidth: '110px',
+  },
   selectGroup: {
-    // minWidth: 120,
     borderRadius: '10px',
     paddingLeft: '1em',
   },
@@ -112,7 +113,7 @@ const Editor = () => {
           />
         </FormControl>
         <div className={classes.selectGroup}>
-          <FormControl>
+          <FormControl className={classes.formControl}>
             <InputLabel className={classes.label}>Language</InputLabel>
             <Select
               className={classes.LangInput}
@@ -131,7 +132,7 @@ const Editor = () => {
               <MenuItem value={'Java'}>Java</MenuItem>
             </Select>
           </FormControl>
-          <FormControl>
+          <FormControl className={classes.formControl}>
             <InputLabel className={classes.label}>Theme</InputLabel>
             <Select
               className={classes.LangInput}

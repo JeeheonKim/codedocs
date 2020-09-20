@@ -4,6 +4,7 @@ import Auth from '../routes/Auth';
 import Home from '../routes/Home';
 import Navigation, {EditorNavigation} from './Navigation';
 import Editor from '../views/editor';
+import Session from './Session';
 
 const AppRouter = ({refreshUser, isLoggedIn, userObj, currentLink}) => {
   console.log(isLoggedIn);
@@ -12,23 +13,25 @@ const AppRouter = ({refreshUser, isLoggedIn, userObj, currentLink}) => {
       {isLoggedIn && <Navigation userObj={userObj}/>}
       <Switch>
         {isLoggedIn ? (
-          <div
-            style={{
-              maxWidth: 890,
-              width: '100%',
-              margin: '0 auto',
-              marginTop: 80,
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
+          <>
             <Route exact path="/">
-              <Home userObj={userObj} />
+              <div
+                style={{
+                  maxWidth: 890,
+                  width: '100%',
+                  margin: '0 auto',
+                  marginTop: 80,
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Home userObj={userObj} />
+              </div>
             </Route>
             <Route exact path="/create">
-              <Editor/>     
+              <Session/>     
             </Route>
-          </div>
+          </>
         ) : (
           <>
             <Route exact path="/">
