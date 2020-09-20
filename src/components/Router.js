@@ -1,5 +1,5 @@
 import React from 'react';
-import {HashRouter as Router, Route, Switch} from 'react-router-dom';
+import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import Auth from '../routes/Auth';
 import Home from '../routes/Home';
 import Navigation, {EditorNavigation} from './Navigation';
@@ -10,7 +10,7 @@ const AppRouter = ({refreshUser, isLoggedIn, userObj, currentLink}) => {
   console.log(isLoggedIn);
   return (
     <Router>
-      {isLoggedIn && <Navigation userObj={userObj}/>}
+      {isLoggedIn && <Navigation userObj={userObj} />}
       <Switch>
         {isLoggedIn ? (
           <>
@@ -28,8 +28,8 @@ const AppRouter = ({refreshUser, isLoggedIn, userObj, currentLink}) => {
                 <Home userObj={userObj} />
               </div>
             </Route>
-            <Route exact path="/create">
-              <Session/>     
+            <Route exact path="/doc/:id">
+              <Session />
             </Route>
           </>
         ) : (

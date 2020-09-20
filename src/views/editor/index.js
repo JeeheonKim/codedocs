@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {
   MenuItem,
@@ -9,7 +9,8 @@ import {
   Select,
   Switch,
 } from '@material-ui/core';
-
+import {useParams} from 'react-router-dom';
+import {dbService} from '../../firebaseConfig';
 import {purple} from '@material-ui/core/colors';
 import {Controlled as CodeMirror} from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
@@ -37,14 +38,14 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     padding: '20px',
     fontSize: '20px',
-    minWidth: "700px",
-    fontSize: "1em"
+    minWidth: '700px',
+    fontSize: '1em',
   },
   formControlGroup: {
     border: '2px solid white',
     borderRadius: '10px',
     padding: '.4em',
-  },  
+  },
   formControl: {
     minWidth: '110px',
   },
@@ -83,31 +84,78 @@ const PurpleSwitch = withStyles({
   checked: {},
   track: {},
 })(Switch);
-const Editor = () => {
+
+const getDataFromFirestore = async (id) => {
+  let x = '';
+  await dbService
+    .collection('docs')
+    .doc(id)
+    .get()
+    .then((ref) => {
+      x = ref.data();
+    })
+    .catch((err) => console.log('err occured', err));
+  return x;
+};
+
+const Editor = (props) => {
+  const {id} = useParams();
   const [highlight, setHighlight] = useState(true);
   const [theme, setTheme] = useState('material');
   const [lang, setLang] = useState('Javascript');
+  const [save, setSave] = useState(true);
   const [code, setCode] = useState(
     `import Greeting from 'greetings.js';\n\nconsole.log("hello there", Greeting);`
   );
+
+  useEffect(() => {
+    dbService
+      .collection('docs')
+      .doc(id)
+      .onSnapshot((doc) => {
+        let data = doc.data();
+        setLang(data.language);
+        setCode(data.content);
+        setHighlight(data.syntax_highlighting);
+      });
+  }, []);
+
+  useEffect(() => {
+    syncWithFirestore();
+  }, [code]);
+  const syncWithFirestore = async () => {
+    let x = save;
+    console.log('hee', x);
+    if (!save) {
+      console.log('hee');
+      await dbService.collection('docs').doc(id).update({
+        theme,
+        syntax_highlighting: highlight,
+        language: lang,
+        content: code,
+      });
+      setSave(true);
+    }
+  };
   const classes = useStyles();
   return (
     <div className={classes.root}>
       {/* <h2 className={classes.heading}>Welcome to editor</h2> */}
-      <div className={[classes.formControlGroup, "toolbar"].join(' ')} >
+      <div className={[classes.formControlGroup, 'toolbar'].join(' ')}>
         <FormControl>
           <FormControlLabel
             className={classes.formControlLabel}
             control={
-              <div style={{paddingLeft:"1em"}}>
+              <div style={{paddingLeft: '1em'}}>
                 <PurpleSwitch
                   checked={highlight}
                   onChange={() => {
                     setHighlight(!highlight);
+                    setSave(false);
                   }}
                   name="syntaxHighlight"
                 />
-                  <span style={{lineHeight: '2em'}}>Syntax Highlighting</span>
+                <span style={{lineHeight: '2em'}}>Syntax Highlighting</span>
               </div>
             }
           />
@@ -122,6 +170,7 @@ const Editor = () => {
               onChange={(newVal) => {
                 if (highlight) {
                   setLang(newVal.target.value);
+                  setSave(false);
                 }
               }}
             >
@@ -148,6 +197,8 @@ const Editor = () => {
           </FormControl>
         </div>
       </div>
+      {console.log(save)}
+      <div className="saving">{save ? 'Saved' : 'Saving...'}</div>
       <div className={`Editor ${classes.Editor}`}>
         <CodeMirror
           className={`code-mirror-container ${classes.codeMirror}`}
@@ -163,6 +214,7 @@ const Editor = () => {
           }}
           onBeforeChange={(editor, data, code) => {
             setCode(code);
+            setSave(false);
           }}
         />
       </div>
