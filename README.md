@@ -1,68 +1,37 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Codedoc: Practice coding interview with peers
 
-## Available Scripts
+😍 Visit [codedoc.space](https://codedoc.space) play around with it yourself! 
 
-In the project directory, you can run:
+## Inspiration
 
-### `yarn start`
+Getting jobs especially as a technical role is really difficult in today's world. What's even harder is getting interviews and getting through them without any hassle. 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+What's even harder is getting interviews and getting through them without any hassle. Both of us have attended multiple interviews and we noticed one of the major problems out there is the lack of coordination between the interviewers and the interviewees, especially on the technical rounds. There is not much interaction between the parties and does not end up being a good experience.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## What it does
 
-### `yarn test`
+Codedocs allows you to share code documents in real time with your interviewers to enhance the interactions in an interview and thereby having a better knowledge of the interviewees skillsets at the end of the day. CodeDocs provides the platform to allow you to have your own code editor on the go and helps you keep focus on the coding problems. It allows you to code in your own language of choice and helps you use your preferred themes. What's more, it allows live editing, so an interview experience is much more interactive, challenging and fun. CodeDocs also allows you to keep track of all your interview questions and solutions, all in one place so you can refer to them at any time and would help you stay a step ahead for your next interview. Having a live code editor, also means you can always have fun coding sessions with your friends and have an amazing experience at the same time.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+CodeDocs basically stands out for the following features:
 
-### `yarn build`
+- Multi-language support and multi-theme support.
+- Cloud storage for all your code interview questions so you can keep track of it at any time
+- An inbuilt timer for allowing interviews to happen on time without hassle.
+- Live editor allows an interactive experience between the interviewers and the interviewees so there's scope for more dynamic questions unlike other editors leading the platform currently.
+- A more personalised interview experience.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How We built it
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+We used ReactJS to build the frontend processing of the application. We used firebase auth to authenticate users while firestore as our main database to account for live editing and data storage. We deployed our application using firebase hosting.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Accomplishments that we're proud of
 
-### `yarn eject`
+We were quite unsure of how live editing works and we are proud of accomplishing that task within a quick day. We also started late for the hack, so our end product for the hack is quite an accomplishment!
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## What's next for CodeDocs:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The hack is more or less an incomplete one and did not live up to all the features we decided on to get it build with. We believe codeDocs is gonna be a huge success given that people from all over the world face this issue.Just some minor tweaks and we should be able to get this going on a quick pace!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+1. **Data analytics on past interviews**: Basically run analytics on all the past interviews to predict lessons/questions that needs to be focused on ( eg: solving a linked list problem ) and things were you are weak during a coding interview so it can help you get better!
+2. **Inline tutorials during coding**: We believe CodeDocs can also be used as a platform to teach coding to all the people out there. Enabling functionalities like recommending optimized steps to use while coding, autocomplete and embedding tutorials as side quests to make coding a lot more fun and are in our list of features to do.
+and many more..
