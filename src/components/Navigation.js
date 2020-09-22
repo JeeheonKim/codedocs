@@ -32,7 +32,7 @@ const addDocToFireStore = async (id) => {
 
 const sessions = [undefined, 'started', 'ended'];
 
-const Navigation = ({userObj}) => {
+const Navigation = ({userObj, setLoggedIn, setUserObj}) => {
   const [session, setSession] = useState(undefined); //undefined, false, true
   const [timer, setTimer] = React.useState(0);
   const [hour, setHour] = useState(1);
@@ -181,7 +181,7 @@ const Navigation = ({userObj}) => {
   };
 
   const handleClickForLogout = () => {
-    handleClickForSetting();
+    setUserObj(null);
     authService.signOut();
   }
 

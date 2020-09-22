@@ -6,11 +6,11 @@ import Navigation, {EditorNavigation} from './Navigation';
 import Editor from '../views/editor';
 import Session from './Session';
 
-const AppRouter = ({refreshUser, isLoggedIn, userObj, currentLink}) => {
+const AppRouter = ({refreshUser, isLoggedIn, userObj,setUserObj, currentLink}) => {
   console.log(isLoggedIn);
   return (
     <Router>
-      {isLoggedIn && <Navigation userObj={userObj} />}
+      {isLoggedIn && <Navigation userObj={userObj} setUserObj={setUserObj}/>}
       <Switch>
         {isLoggedIn ? (
           <>

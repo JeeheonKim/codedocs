@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AppRouter from "./Router";
 import { authService } from "../firebaseConfig";
-
+import {CircularProgress} from '@material-ui/core';
 function App() {
   const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
@@ -36,9 +36,10 @@ function App() {
           refreshUser={refreshUser}
           isLoggedIn={Boolean(userObj)}
           userObj={userObj}
+          setUserObj={setUserObj}
         />
       ) : (
-        "Initializing..."
+          <CircularProgress style={{position: 'absolute', top: '50%', left:'50%'}}/>
       )}
     </>
   );
