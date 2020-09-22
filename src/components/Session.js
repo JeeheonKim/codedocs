@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Editor from '../views/editor';
+import {dbService} from '../firebaseConfig';
 import { Input, Button, TextField, MenuItem, NativeSelect} from '@material-ui/core';
-import Timer from './Timer';
 
-const lorem = `Given a singly linked list of integers l and an integer k, remove all elements from list l that have a value equal to k.`
 const Session = () => {
     return (
         <div style={{display: 'flex', flexDirection: 'row', alignItems: 'stretch', marginTop: '1.5em'}} className="fullScreen">
             <SessionLeftPanel/>
-            <div style={{marginTop: '1em'}}>
+            <div style={{marginTop: '1em',  width: '100%'}}>
                 <Editor/>
             </div>
         </div>
@@ -33,11 +32,11 @@ const SessionLeftPanel = () => {
         {navItem === "problem"? (
             <div id="problemText">
                 <textarea placeholder="Write a problem..."/>
-                <a style={{display:'block',  margin: '1em'}} className="authSwitch" href="#">See attachment</a>
+                <a className="authSwitch" href="#" style={{display:'block',  margin: '1em'}} >See attachment</a>
             </div>):(
             <div id="FeedbackText">
                 <textarea placeholder="Give feedback on interviewee..."/>
-                <a style={{display:'block',  margin: '1em'}} className="authSwitch" href="#">See attachment</a>
+                <a className="authSwitch" href="#" style={{display:'block',  margin: '1em'}} >See attachment</a>
             </div>)
         }
     </div>)

@@ -21,6 +21,7 @@ import MODES from './modes';
 
 const useStyles = makeStyles({
   root: {
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -31,6 +32,7 @@ const useStyles = makeStyles({
   },
   Editor: {
     display: 'inline-block',
+    width: '100%',
   },
   codeMirror: {
     display: 'flex',
@@ -38,7 +40,8 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     padding: '20px',
     fontSize: '20px',
-    minWidth: '700px',
+    minWidth: '300px',
+    width: '100%',
     fontSize: '1em',
   },
   formControlGroup: {
@@ -198,7 +201,7 @@ const Editor = (props) => {
         </div>
       </div>
       {console.log(save)}
-      <div className="saving">{save ? 'Saved' : 'Saving...'}</div>
+      <div className="saving">{save ? 'Saved' : (<span style={{color: '#FF4929'}}>Saving...</span>)}</div>
       <div className={`Editor ${classes.Editor}`}>
         <CodeMirror
           className={`code-mirror-container ${classes.codeMirror}`}

@@ -15,6 +15,7 @@ function App() {
         });
       } else {
         setUserObj(null);
+        console.log('statechanged')
       }
       setInit(true);
     });

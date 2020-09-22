@@ -122,9 +122,12 @@ form {
   color: white;
   margin-top: 10px;
   box-sizing: content-box;
-  cursor: pointer;
+  /* cursor: pointer;  */
 }
 
+#authSubmit{
+  cursor:pointer;
+}
 .authError {
   color: tomato;
   text-align: center;
@@ -206,4 +209,24 @@ textarea{
 #select-hours,#select-minutes,#select-seconds{
   /* color: white; */
   /* background-color: white; */
+}
+
+.saving {
+  padding: .5em
+}
+
+.navBtn {
+  font-family: 'Lato', sans-serif;
+  border: none;
+  margin: .5em;
+  border-radius: 4px;
+  background-color: #5CDB95;
+  color: black;
+}
+.navBtn:hover {
+  opacity: .7;
+}
+.navBtn:focus {
+  border: none;
+  outline: none;
 }

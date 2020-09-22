@@ -1,7 +1,8 @@
 import {Link, useHistory} from 'react-router-dom';
-import {dbService} from '../firebaseConfig';
+import {authService, dbService} from '../firebaseConfig';
 import React, {useState} from 'react';
-import {NativeSelect} from '@material-ui/core';
+import {NativeSelect, Button, ButtonBase, ButtonGroup, Menu, MenuItem} from '@material-ui/core';
+import {NavLogo} from './Logo';
 
 const addDocToFireStore = async (id) => {
   let docId, docRef;
@@ -29,13 +30,10 @@ const addDocToFireStore = async (id) => {
   return docId;
 };
 
-const menus = ['home', 'createSession'];
 const sessions = [undefined, 'started', 'ended'];
 
 const Navigation = ({userObj}) => {
-  const [menu, setMenu] = useState('');
-  const [session, setSession] = useState(undefined);
-  const [started, setStarted] = useState(false);
+  const [session, setSession] = useState(undefined); //undefined, false, true
   const [timer, setTimer] = React.useState(0);
   const [hour, setHour] = useState(1);
   const [minute, setMinute] = useState(0);
@@ -56,8 +54,7 @@ const Navigation = ({userObj}) => {
   };
 
   const Timer = ({started}) => {
-    console.log('started', started);
-
+    console.log('Timer started', started);
     const id = React.useRef(null);
     const clear = () => {
       window.clearInterval(id.current);
@@ -79,6 +76,8 @@ const Navigation = ({userObj}) => {
       var h = Math.floor(d / 3600);
       var m = Math.floor((d % 3600) / 60);
       var s = Math.floor((d % 3600) % 60);
+      const timeObj = {'hour': h, 'minute': m, 'second':s}
+      //TODO: timeObj to select object
       return (
         ('0' + h).slice(-2) +
         ':' +
@@ -91,7 +90,6 @@ const Navigation = ({userObj}) => {
     let i = 0;
     let options60 = [];
     let options3 = [];
-    let MenuItem;
     for (i = 0; i < 60; ++i) {
       if (i < 3) {
         options3.push(i);
@@ -111,7 +109,9 @@ const Navigation = ({userObj}) => {
       }
     };
 
-    return !started ? (
+    return (session === undefined)? (
+      <span></span>
+    ) : ( (session === false) ? (
       <span className="timer" style={{display: 'inline-block'}}>
         <table>
           <tbody>
@@ -162,55 +162,49 @@ const Navigation = ({userObj}) => {
       <span className="timer" style={{display: 'inline-block'}}>
         {secondsToHMS(timer)}
       </span>
-    );
+    ))
   };
+
   const handleClick = async (e) => {
     let op = await addDocToFireStore(userObj.uid);
     return op;
   };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClickForSetting = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseForSetting = () => {
+    setAnchorEl(null);
+  };
+
+  const handleClickForLogout = () => {
+    handleClickForSetting();
+    authService.signOut();
+  }
+
   const history = useHistory();
   return (
     <nav>
       <Link
         to="/"
         className="logo"
-        menu="home"
         onClick={() => {
           setSession(undefined);
-          setMenu('home');
+          console.log('clicked logo', session);
         }}
       >
-        <div
-          style={{
-            fontSize: '2em',
-            textAlign: 'center',
-            padding: '.2em',
-            color: '#FF4929',
-            marginRight: '1em',
-          }}
-        >
-          <span>👩🏽‍💻</span>
-          <span
-            style={{
-              fontSize: '.7em',
-              color: '#FF4929',
-              verticalAlign: 'center',
-              fontWeight: '700',
-              lineHeight: '2em',
-              padding: '.35em',
-            }}
-          >
-            CodeDoc
-          </span>
-        </div>
+        <NavLogo/>
       </Link>
       <ul style={{display: 'flex', justifyContent: 'center', marginTop: 5}}>
-        {!(menu === 'createSession') ? (
+        {(session === undefined) ? (
           // not in doc
           <li>
             <button
               onClick={async (e) => {
-                console.log('clicked here');
+                setSession(false);
                 let id = await handleClick(e);
                 history.push(`/doc/${id}`);
               }}
@@ -221,23 +215,24 @@ const Navigation = ({userObj}) => {
                 fontSize: 12,
                 lineHeight: '2em',
               }}
-              className="formBtn"
+              className="navBtn"
             >
-              Start a new session!
+              Create a new session!
             </button>
           </li>
-        ) : // already in doc
-        session === undefined ? (
+        ) : (// already in doc
+        <>
+        <li>
+          <Timer started={session}/>
+        </li>
+        {(session === false) ? (
           <>
-            <li>
-              <Timer started={started} />
-            </li>
             <li>
               <Link
                 onClick={() => {
                   setSession(true);
+                  console.log(session);
                   // TODO: triggerTimer
-                  setStarted(true);
                   setTimer(hour * 60 * 60 + minute * 60 + second);
                 }}
                 // to="/create/start"
@@ -258,19 +253,12 @@ const Navigation = ({userObj}) => {
           // after start
           <>
             <li>
-              <Timer started={started} />
-
-              {/* <span className='timer' style={{lineHeight: '2.5em', color:'black'}}>
-                {secondsToHMS(timer)}
-              </span> */}
-            </li>
-            <li>
-              <Link
+              <button
                 onClick={() => {
                   setSession(undefined);
-                  setStarted(false);
+                  console.log(session);
                 }}
-                to="/create/submitted"
+                to="/"
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -278,12 +266,14 @@ const Navigation = ({userObj}) => {
                   fontSize: 12,
                   lineHeight: '2em',
                 }}
-                className="formBtn"
+                className="navBtn"
               >
                 Finish session
-              </Link>
+              </button>
             </li>
           </>
+        )}
+        </>
         )}
       </ul>
       <a
@@ -296,12 +286,25 @@ const Navigation = ({userObj}) => {
         style={{
           lineHeight: '3.5em',
           verticalAlign: 'center',
-          paddingRight: '1em',
         }}
       >
         <span>
           {' '}
-          Hello, {userObj.displayName ? userObj.displayName : 'User'}{' '}
+          Hello, {userObj.displayName ? userObj.displayName : 'User'}
+          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickForSetting} style={{fontSize: '1.5em', }}>
+            ⚙️
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleCloseForSetting}
+          >
+            {/* <MenuItem onClick={handleCloseForSetting}>Profile</MenuItem>
+            <MenuItem onClick={handleCloseForSetting}>My account</MenuItem> */}
+            <MenuItem onClick={handleClickForLogout}>Logout</MenuItem>
+          </Menu>
         </span>
       </div>
     </nav>

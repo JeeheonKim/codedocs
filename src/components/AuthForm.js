@@ -25,8 +25,18 @@ const AuthForm = () => {
         data = await authService.createUserWithEmailAndPassword(
           email,
           password
-        );
+        ).then( (user)=> {
+          //Login is triggered --> line 4 in app.js
+          user.sendEmailVerification(); //Send email verification
+          console.log('succss'); //Show success message
+          authService.signOut(); //Logout is triggered --> line 16 in app.js
+        } );
       } else {
+        let user = authService.currentUser;
+        if(!user.isEmailVerified()){
+          console.log("Email is verified");
+          return
+        }
         data = await authService.signInWithEmailAndPassword(email, password);
       }
       console.log(data);
@@ -61,6 +71,7 @@ const AuthForm = () => {
         <Input
           type="submit"
           className="authInput authSubmit"
+          id="authSubmit"
           value={newAccount ? "Create Account" : "Sign In"}
         />
         {error && <span className="authError">{error}</span>}
