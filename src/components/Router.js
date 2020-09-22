@@ -7,7 +7,6 @@ import Editor from '../views/editor';
 import Session from './Session';
 
 const AppRouter = ({refreshUser, isLoggedIn, userObj,setUserObj, currentLink}) => {
-  console.log(isLoggedIn);
   return (
     <Router>
       {isLoggedIn && <Navigation userObj={userObj} setUserObj={setUserObj}/>}

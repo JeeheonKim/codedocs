@@ -128,9 +128,7 @@ const Editor = (props) => {
   }, [code]);
   const syncWithFirestore = async () => {
     let x = save;
-    console.log('hee', x);
     if (!save) {
-      console.log('hee');
       await dbService.collection('docs').doc(id).update({
         theme,
         syntax_highlighting: highlight,
@@ -200,7 +198,6 @@ const Editor = (props) => {
           </FormControl>
         </div>
       </div>
-      {console.log(save)}
       <div className="saving">{save ? 'Saved' : (<span style={{color: '#FF4929'}}>Saving...</span>)}</div>
       <div className={`Editor ${classes.Editor}`}>
         <CodeMirror

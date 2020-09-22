@@ -1,19 +1,41 @@
 import React from "react";
-import { authService, firebaseInstance } from "../firebaseConfig";
+import { authService, firebaseInstance, dbService } from "../firebaseConfig";
 import AuthForm from "../components/AuthForm";
 import Button from "@material-ui/core/Button"
+
+const createUserObject = (uid) => {
+  try{
+    dbService.collection('users').doc(uid).set({docs:[]});
+  } catch(e){
+    console.log(e);
+  }
+} 
 
 const onGoogleClick = async () => {
   const provider = new firebaseInstance.auth.GoogleAuthProvider();
   await authService.signInWithPopup(provider)
+    .then((result) => {
+      var isNewUser =  result.additionalUserInfo.isNewUser;
+      if (isNewUser) {
+        createUserObject(result.user.uid);
+      } 
+    })
     .catch((e)=> console.log(e));
 };
 
 const onGithubClick = async () => {
   const provider = new firebaseInstance.auth.GithubAuthProvider();
   await authService.signInWithPopup(provider)
-    .catch((e)=> console.log(e));
+  .then((result) => {
+    var isNewUser =  result.additionalUserInfo.isNewUser;
+    if (isNewUser) {
+      console.log(result.user);
+      createUserObject(result.user.uid);
+    } 
+  })
+  .catch((e)=> console.log(e));
 };
+
 
 const Auth = () => {
   return (

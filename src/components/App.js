@@ -15,7 +15,6 @@ function App() {
         });
       } else {
         setUserObj(null);
-        console.log('statechanged')
       }
       setInit(true);
     });
@@ -28,7 +27,6 @@ function App() {
       updateProfile: (args) => user.updateProfile(args),
     });
   };
-  console.log('App', init)
   return (
     <>
       {init ? (

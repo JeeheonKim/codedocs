@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import { authService } from "../firebaseConfig";
+import { authService, dbService } from "../firebaseConfig";
 import {Input, Button} from '@material-ui/core'
+
+const createUserObject = (uid) => {
+  try{
+    dbService.collection('users').doc(uid).set({docs:[]});
+  } catch(e){
+    console.log(e);
+  }
+} 
 
 const AuthForm = () => {
   const [email, setEmail] = useState("");
@@ -26,9 +34,8 @@ const AuthForm = () => {
           email,
           password
         ).then( (user)=> {
-          //Login is triggered --> line 4 in app.js
-          user.sendEmailVerification(); //Send email verification
-          console.log('succss'); //Show success message
+          createUserObject(user.uid);
+          authService.sendEmailVerification(); //Send email verification
           authService.signOut(); //Logout is triggered --> line 16 in app.js
         } );
       } else {

@@ -6,7 +6,6 @@ const Timer = ({started}) => {
     const [hour, setHour] = useState(1);
     const [minute, setMinute] = useState(0);
     const [second, setSecond] = useState(0);
-    console.log('started', started);
 
     const id =React.useRef(null);
     const clear= () => {
@@ -39,7 +38,6 @@ const Timer = ({started}) => {
     }
     const handleChange = (event) => {
         const id = event.target.id
-        console.log(id)
         const value = event.target.value
         if (id ==="select-hours"){
             setHour(value);

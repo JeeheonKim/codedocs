@@ -1,5 +1,5 @@
 import {Link, useHistory} from 'react-router-dom';
-import {authService, dbService} from '../firebaseConfig';
+import {authService, dbService, firebaseInstance} from '../firebaseConfig';
 import React, {useState} from 'react';
 import {NativeSelect, Button, ButtonBase, ButtonGroup, Menu, MenuItem} from '@material-ui/core';
 import {NavLogo} from './Logo';
@@ -8,7 +8,6 @@ const addDocToFireStore = async (id) => {
   let docId, docRef;
   try {
     docId = dbService.collection('docs').doc().id;
-    console.log('ud', docId);
     docRef = await dbService
       .collection('docs')
       .doc(docId)
@@ -23,7 +22,13 @@ const addDocToFireStore = async (id) => {
             userId: id,
           },
         ],
+        createdAt: Date.now(),
       });
+      await dbService
+      .collection('users').doc(id).update({
+        docs: firebaseInstance.firestore.FieldValue.arrayUnion(docId)
+      })
+  
   } catch (err) {
     console.log('error occured', err);
   }
@@ -54,7 +59,6 @@ const Navigation = ({userObj, setLoggedIn, setUserObj}) => {
   };
 
   const Timer = ({started}) => {
-    console.log('Timer started', started);
     const id = React.useRef(null);
     const clear = () => {
       window.clearInterval(id.current);
@@ -98,7 +102,6 @@ const Navigation = ({userObj, setLoggedIn, setUserObj}) => {
     }
     const handleChange = (event) => {
       const id = event.target.id;
-      console.log(id);
       const value = event.target.value;
       if (id === 'select-hours') {
         setHour(value);
@@ -193,7 +196,6 @@ const Navigation = ({userObj, setLoggedIn, setUserObj}) => {
         className="logo"
         onClick={() => {
           setSession(undefined);
-          console.log('clicked logo', session);
         }}
       >
         <NavLogo/>
@@ -231,7 +233,6 @@ const Navigation = ({userObj, setLoggedIn, setUserObj}) => {
               <Link
                 onClick={() => {
                   setSession(true);
-                  console.log(session);
                   // TODO: triggerTimer
                   setTimer(hour * 60 * 60 + minute * 60 + second);
                 }}
@@ -256,7 +257,6 @@ const Navigation = ({userObj, setLoggedIn, setUserObj}) => {
               <button
                 onClick={() => {
                   setSession(undefined);
-                  console.log(session);
                 }}
                 to="/"
                 style={{
