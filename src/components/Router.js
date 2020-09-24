@@ -28,7 +28,7 @@ const AppRouter = ({refreshUser, isLoggedIn, userObj,setUserObj, currentLink}) =
               </div>
             </Route>
             <Route exact path="/doc/:id">
-              <Session />
+              <Session/>
             </Route>
           </>
         ) : (

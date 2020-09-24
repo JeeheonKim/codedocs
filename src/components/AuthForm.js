@@ -44,9 +44,8 @@ const AuthForm = () => {
           console.log("Email is verified");
           return
         }
-        data = await authService.signInWithEmailAndPassword(email, password);
+        await authService.signInWithEmailAndPassword(email, password);
       }
-      console.log(data);
     } catch (e) {
       setError(e.message);
     }

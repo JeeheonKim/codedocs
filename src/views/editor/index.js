@@ -3,7 +3,9 @@ import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {
   MenuItem,
   InputLabel,
+  Input,
   FormHelperText,
+  TextField,
   FormControl,
   FormControlLabel,
   Select,
@@ -88,19 +90,6 @@ const PurpleSwitch = withStyles({
   track: {},
 })(Switch);
 
-const getDataFromFirestore = async (id) => {
-  let x = '';
-  await dbService
-    .collection('docs')
-    .doc(id)
-    .get()
-    .then((ref) => {
-      x = ref.data();
-    })
-    .catch((err) => console.log('err occured', err));
-  return x;
-};
-
 const Editor = (props) => {
   const {id} = useParams();
   const [highlight, setHighlight] = useState(true);
@@ -110,6 +99,7 @@ const Editor = (props) => {
   const [code, setCode] = useState(
     `import Greeting from 'greetings.js';\n\nconsole.log("hello there", Greeting);`
   );
+  const [title, setTitle] = useState(undefined);
 
   useEffect(() => {
     dbService
@@ -120,12 +110,17 @@ const Editor = (props) => {
         setLang(data.language);
         setCode(data.content);
         setHighlight(data.syntax_highlighting);
+        setTitle(data.title);
       });
   }, []);
 
+  const handleOnChangeInput = (event) => {
+    setSave(false);
+    setTitle(event.target.value);
+  }
   useEffect(() => {
     syncWithFirestore();
-  }, [code]);
+  }, [code, title]);
   const syncWithFirestore = async () => {
     let x = save;
     if (!save) {
@@ -134,6 +129,7 @@ const Editor = (props) => {
         syntax_highlighting: highlight,
         language: lang,
         content: code,
+        title: title
       });
       setSave(true);
     }
@@ -141,7 +137,7 @@ const Editor = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      {/* <h2 className={classes.heading}>Welcome to editor</h2> */}
+      <input className={classes.heading} id='input-title' placeholder='Name of the session...' onChange={handleOnChangeInput} value={title}/>
       <div className={[classes.formControlGroup, 'toolbar'].join(' ')}>
         <FormControl>
           <FormControlLabel

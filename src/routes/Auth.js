@@ -29,7 +29,6 @@ const onGithubClick = async () => {
   .then((result) => {
     var isNewUser =  result.additionalUserInfo.isNewUser;
     if (isNewUser) {
-      console.log(result.user);
       createUserObject(result.user.uid);
     } 
   })
@@ -51,6 +50,9 @@ const Auth = () => {
       <div className="authBtns">
         <GoogleSignInButton/>
         <GithubSignInButton/>      
+      </div>
+      <div style={{fontSize: '12px', color: '#FFFFFF', fontWeight: '300', marginTop: '1em'}}>
+        This service is under construction. Please don't store you data here.
       </div>
     </div>
   );
